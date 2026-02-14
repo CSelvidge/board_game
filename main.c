@@ -1,4 +1,14 @@
 #include <stdio.h>
+#include "board.h"
+#include "cards.h"
+#include "dice.h"
+#include "tokens.h"
+
+
+#define STAGES
+#define ENCOUNTER_CARD_LEN 7;
+#define NAZGHUL_MAX 9;
+#define URUKHAI_MAX 6;
 
 
 int main(void) {
@@ -37,6 +47,14 @@ int main(void) {
     Define rules:
     This is going to take some time, careful switch blocks and checks. Define dice before this so you can at least test those two things together.
     *********************/
+    char* fellowship_names[] = {'Aragorn', 'Gimli', 'Legolas', 'Marry and Pippen', 'Frodo and Samwise'};
+    EncounterCardDef all_encounter_cards[6][7];
+
+    BoardState board = init_board();
+
+    Encounter_die e_die_1 = init_encounter_die();
+    Encounter_die e_die_2 = init_encounter_die();
+    Combat_die combat_die = init_combat_die(fellowship_names);
 
     return 0;
 }

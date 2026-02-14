@@ -1,15 +1,18 @@
 typedef struct {
-    char* text;
-    char* card_name;
-    char* owned_by; //Which player is the friend card assigned to
-    unsigned char alignment; // Friend, Foe,  or Special mordor card
-    unsigned char displayed; // Card flipped or not
-    unsigned char discarded; // Card still in play or not
-    unsigned char is_combat; // Does the card invoke combat
-    unsigned char total_combats; // If it does how many
-}Encounter_card;
+    const char *name;
+    const char *text;
+    unsigned char alignment; // 0 Foe, 1 Friend,2 Special mordor card
+    unsigned char special_effect; // 0 is just text, 1 is combat, 2 is courage
+    signed char effect_variance; //How many combats or how much courage is changed
+}EncounterCardDef;
+
+
+typedef struct {
+    unsigned char flags; // 0 not displayed, 1 displayed, 2 is discarded
+    unsigned char owned_by; //Which player is the friend card assigned to
+}EncounterCardState;
 
 typedef struct {
     char* text;
     unsigned char discarded; // Card still in play or not
-}Gandalf_card;
+}GandalfCard;

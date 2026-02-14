@@ -12,11 +12,13 @@ Encounter_die init_encounter_die() {
     return die;
 }
 
-Combat_die init_combat_die(char* character_names) {
+Combat_die init_combat_die(char* character_names[]) {
     Combat_die die;
-    for ( char i = 0; i < 6; i++) {
-        die.names[i] = character_names[i];
+    for ( char i = 0; i < 4; i++) {
+        die.sides[i] = character_names[i];
     }
+    die.sides[4] = 'Sauron';
+    die.sides[5] = 'Gandalf';
     return die;
 }
 
@@ -27,3 +29,5 @@ Fellowship_die init_fellowship_die(char* character_name) {
     };
     return die;
 }
+
+void roll_die(void* die, ...);
