@@ -1,18 +1,20 @@
-typedef struct {
-    //uint32_t die_color; // Not used in initial REPL version, but once we move to art assets this can be used to color the die
-    char* name;
-    unsigned char sides[6];
-} Fellowship_die;
+#include <stdint.h>
+#include <stddef.h>
+
+#define DICE_SIDES 6 //all dice are D6
+
+uint8_t number_sides[] = {1, 2, 3, 4, 5, 6};
+const char* name_sides[] = {'Aragorn', 'Legolas', 'Gimli', 'Marry and Pippen', 'Sauron', 'Gandalf'};
+
+typedef enum {SIDE_U8, SIDE_STR} SideType;
 
 typedef struct {
-    char *names[6];
-}Combat_die;
+    //uint32_t die_color;
+    size_t nsides;
+    SideType side_type;
+    const void *sides;
+}Die;
 
-typedef struct {
-    unsigned char sides[6];
-}Encounter_die;
-
-
-Encounter_die init_encounter_die();
-Combat_die init_combat_die(char* character_names);
-Fellowship_die init_fellowship_die(char* character_name);
+Die init_standard_die();
+Die init_combat_die();
+void roll_dice(Die dice[], uint8_t count, uint8_t rolls[]);

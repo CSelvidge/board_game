@@ -47,14 +47,20 @@ int main(void) {
     Define rules:
     This is going to take some time, careful switch blocks and checks. Define dice before this so you can at least test those two things together.
     *********************/
-    char* fellowship_names[] = {'Aragorn', 'Gimli', 'Legolas', 'Marry and Pippen', 'Frodo and Samwise'};
+    const char* fellowship_names[] = {'Aragorn', 'Gimli', 'Legolas', 'Marry and Pippen', 'Frodo and Samwise'};
+    Die fellowship_dice[5];
+
+    for (uint8_t i = 0; i < 5; i++) {
+        fellowship_dice[i] = init_standard_die();
+    }
+
     EncounterCardDef all_encounter_cards[6][7];
 
     BoardState board = init_board();
 
-    Encounter_die e_die_1 = init_encounter_die();
-    Encounter_die e_die_2 = init_encounter_die();
-    Combat_die combat_die = init_combat_die(fellowship_names);
+    Die e_die_1 = init_standard_die();
+    Die e_die_2 = init_standard_die();
+    Die combat_die = init_combat_die(fellowship_names);
 
     return 0;
 }

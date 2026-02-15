@@ -7,27 +7,28 @@
            Combat die (singular)
 */
 
-Encounter_die init_encounter_die() {
-    Encounter_die die  = {{1, 2, 3, 4, 5, 6}};
-    return die;
-}
-
-Combat_die init_combat_die(char* character_names[]) {
-    Combat_die die;
-    for ( char i = 0; i < 4; i++) {
-        die.sides[i] = character_names[i];
-    }
-    die.sides[4] = 'Sauron';
-    die.sides[5] = 'Gandalf';
-    return die;
-}
-
-Fellowship_die init_fellowship_die(char* character_name) {
-    Fellowship_die die = {
-    .name = character_name,
-    .sides = {1, 2, 3, 4, 5, 6}
+Die init_standard_die() {
+    Die die  = {
+        .nsides = DICE_SIDES,
+        .side_type = SIDE_U8,
+        .sides = number_sides
     };
     return die;
 }
 
-void roll_die(void* die, ...);
+Die init_combat_die() {
+    Die die = {
+        .nsides = DICE_SIDES,
+        .side_type = SIDE_STR,
+        .sides = name_sides
+    };
+    return die;
+}
+
+void roll_dice(Die dice[], uint8_t count, uint8_t rolls[]) {
+
+    for (uint8_t i = 0; i < count; i++) {
+        //random here
+        rolls[i] = 0; //random result instead of 0
+    }
+}
