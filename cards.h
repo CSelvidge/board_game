@@ -12,7 +12,14 @@ typedef struct {
 }EncounterCardState;
 
 typedef struct {
+    char* title;
     char* text;
+}GandalfCardDef;
+
+typedef struct {
     unsigned char discarded; // Card still in play or not
-}GandalfCard;
-shit fuck ass
+}GandalfCardState;
+
+
+void init_gandalf_cards(GandalfCardDef card_defs[], GandalfCardState card_states[]);
+

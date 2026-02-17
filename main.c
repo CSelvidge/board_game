@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdint.h>
 #include "board.h"
 #include "cards.h"
 #include "dice.h"
@@ -9,6 +10,9 @@
 #define ENCOUNTER_CARD_LEN 7;
 #define NAZGHUL_MAX 9;
 #define URUKHAI_MAX 6;
+
+void get_player_names();
+int8_t greeting();
 
 
 int main(void) {
@@ -47,6 +51,11 @@ int main(void) {
     Define rules:
     This is going to take some time, careful switch blocks and checks. Define dice before this so you can at least test those two things together.
     *********************/
+    int8_t num_players;
+    num_players = greeting();
+    char* player_names[num_players];
+
+    prepare_game_assets();
     const char* fellowship_names[] = {'Aragorn', 'Gimli', 'Legolas', 'Marry and Pippen', 'Frodo and Samwise'};
     Die fellowship_dice[5];
 
@@ -55,12 +64,53 @@ int main(void) {
     }
 
     EncounterCardDef all_encounter_cards[6][7];
+    GandalfCardDef gandalf_cards[5];
+    GandalfCardState gandalf_card_states[5];
+    init_gandalf_cards(gandalf_cards, gandalf_card_states);
 
     BoardState board = init_board();
 
     Die e_die_1 = init_standard_die();
     Die e_die_2 = init_standard_die();
-    Die combat_die = init_combat_die(fellowship_names);
+    Die combat_die = init_combat_die();
 
     return 0;
+}
+
+void prepare_game_assets() {
+
+}
+
+void get_player_names() {
+
+}
+
+void clear_buffer() {
+    char c;
+    while ((c = getchar()) != '\n' && c != EOF) {}
+}
+
+int8_t greeting() {
+    int8_t num_players;
+
+    while (1) {
+        printf("Welcome to the REPL version of Adventure to Mount doom.\nHow many players are playing? (1-4)\n: ");
+        if (scanf("%hhd", &num_players) != 1) {
+            printf("Invalid input, please enter a number between 1 and 4.\n");
+            clear_buffer();
+            continue;
+        }
+
+        if (num_players < 1 || num_players > 4) {
+            printf("Invalid number of players, the game only supports 1-4 players.\n");
+            clear_buffer();
+            continue;
+        }
+        break;
+    }
+
+    clear_buffer();
+    const char plural = num_players > 1 ? "s" : "";
+    printf("Game will be setup for %d player%s.\n", num_players, plural);
+    return num_players;
 }
