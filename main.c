@@ -12,6 +12,7 @@
 #define URUKHAI_MAX 6;
 
 void get_player_names();
+void clear_buffer();
 int8_t greeting();
 
 
@@ -19,20 +20,25 @@ int main(void) {
     /*********************
     ----------TODO ----------
     Define dice:
-    1 - Fellowship movement dice (gimli, legolas, arigorn, M&P, F&S)
-    2 - Combat die (Aragorn, legolas, gimli, M&P, Sauron, Gandalf)
-    3 - Encounter number dice (2 dice standard ints 1 - 6)
+    1 - Fellowship movement dice (gimli, legolas, arigorn, M&P, F&S) -- I believe this is done
+    2 - Combat die (Aragorn, legolas, gimli, M&P, Sauron, Gandalf) -- I believe this is done
+    3 - Encounter number dice (2 dice standard ints 1 - 6) -- I believe this is done
 
     Define tokens:
-    1 - Urak-hai (5 Standard 1 Cheiftan)
-    2 - Nazghul (8 standard 1 Witch King)
-    3 - Fellowship members (Gimli, Aragorn, Legolas, M&P, F&S)
-    4 - Gandalf and Treebird tokens DON'T FORGET
+    1 - Urak-hai (5 Standard 1 Cheiftan) ------------ See following comment
+    2 - Nazghul (8 standard 1 Witch King) -- I do not believe these tokens need to exist in a defined state,
+                                            However a struct may need to exist for board position or token art assets in future
+    3 - Fellowship members (Gimli, Aragorn, Legolas, M&P, F&S) - State struct is required for current position and to easily check to see if can assist in combat etc.
+                                                                Make this struct LIGHT and CACHE friendly
+
+    4 - Gandalf and Treebird tokens DON'T FORGET -- These are covered as bitflags in the BoardState struct,
+                                                    but art assets may require a struct state
     
     Define cards:
-    Card sets per each destination zones (Rivendell - > Minas Morgul)
+    Card sets per each destination zones (Rivendell - > Minas Morgul) -- I can see no way but to hardcode definitions for all cards, seperated by zone, into arrays.
+                                                                        Consider a master array, or avoiding that, use enum Zone in board.h
     Don't forget Boromir
-    Gandalf cards
+    Gandalf cards -- I belive this is done
 
     Define board:
     Perhaps an array for the spaces between destination spaces. Index is the distance from the previous destination and the array itself can use [0,1,2] as unsigned chars
