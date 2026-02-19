@@ -120,3 +120,4 @@ int8_t greeting() {
     printf("Game will be setup for %d player%s.\n", num_players, plural);
     return num_players;
 }
+commenty wantinty
