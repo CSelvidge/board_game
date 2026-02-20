@@ -1,17 +1,18 @@
 #include <stdio.h>
 #include <stdint.h>
+#include <string.h>
 #include "board.h"
 #include "cards.h"
 #include "dice.h"
 #include "tokens.h"
 
+#define ENCOUNTER_CARD_LEN 7
+#define NAZGHUL_MAX 9
+#define URUKHAI_MAX 6
+#define MAX_PLAYERS 4
+#define NAME_LEN 32
 
-#define STAGES
-#define ENCOUNTER_CARD_LEN 7;
-#define NAZGHUL_MAX 9;
-#define URUKHAI_MAX 6;
-
-void get_player_names();
+void get_player_names(int8_t num_players, char player_names[MAX_PLAYERS][NAME_LEN]);
 void clear_buffer();
 int8_t greeting();
 
@@ -58,10 +59,11 @@ int main(void) {
     This is going to take some time, careful switch blocks and checks. Define dice before this so you can at least test those two things together.
     *********************/
     int8_t num_players;
-    num_players = greeting();
-    char* player_names[num_players];
+    num_players = greeting(); // Greeting function ensures correct number of players(1 - 4)
+    char player_names[MAX_PLAYERS][NAME_LEN] = {0};
 
-    prepare_game_assets();
+    get_player_names(num_players, player_names);
+
     const char* fellowship_names[] = {'Aragorn', 'Gimli', 'Legolas', 'Marry and Pippen', 'Frodo and Samwise'};
     Die fellowship_dice[5];
 
@@ -83,11 +85,21 @@ int main(void) {
     return 0;
 }
 
-void prepare_game_assets() {
 
-}
+void get_player_names(int8_t num_players, char player_names[][NAME_LEN]) {
 
-void get_player_names() {
+    for (int8_t i = 0; i < num_players; i++) {
+        char confirmed = 'n';
+        while (confirmed != 'y' && confirmed != 'Y'){
+            printf("Please enter the name of player %d: ", i + 1);
+            if (fgets(player_names[i], NAME_LEN, stdin) != NULL) {
+                player_names[i][strcspn(player_names[i], "\n")] = '\0';
+            }
+            printf("Is the name '%s' correct for player %d? (y/n): ", player_names[i], i + 1);
+            confirmed = getchar();
+            clear_buffer();
+        }
+    }
 
 }
 
@@ -120,4 +132,3 @@ int8_t greeting() {
     printf("Game will be setup for %d player%s.\n", num_players, plural);
     return num_players;
 }
-commenty wantinty

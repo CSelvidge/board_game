@@ -12,7 +12,7 @@ typedef struct {
 }EncounterCardState;
 
 typedef struct {
-    char* title;
+    char* title;// 8 bytes
     char* text;
 }GandalfCardDef;
 
