@@ -71,7 +71,18 @@ int main(void) {
         fellowship_dice[i] = init_standard_die();
     }
 
-    EncounterCardDef all_encounter_cards[6][7];
+    EncounterCardDef boromir_def;
+    boromir_def = init_boromir_def(boromir_def);
+
+
+    EncounterCardState boromir_state = {
+        .flags = 1,
+        .owned_by = 0
+    };
+
+    EncounterCardDef all_encounter_defs[42] = {0}; //Initialize safely, zone cards will be in sets of 7, so every 7 cards is a new zone
+    EncounterCardState all_encounter_states[42] = {0};
+    uint8_t zone_cards[7] = {0}; //7 indexes into the all_encounter_defs to define cards in the zone
     GandalfCardDef gandalf_cards[5];
     GandalfCardState gandalf_card_states[5];
     init_gandalf_cards(gandalf_cards, gandalf_card_states);

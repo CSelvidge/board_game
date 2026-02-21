@@ -6,6 +6,19 @@
            Do not forget boromir         
 */
 
+
+EncounterCardDef init_boromir_def(EncounterCardDef boromir) {
+    boromir = (EncounterCardDef) {
+        .name = "Boromir",
+        .text = "After losing a battle against uruk-hai: Re-roll the battle die. You lose if you roll the Sauron symbol.",
+        .alignment = 1,
+        .special_effect = 0,
+        .effect_variance = 0
+    };
+
+    return boromir;
+}
+
 void init_gandalf_cards(GandalfCardDef card_defs[], GandalfCardState card_states[]) {
     cards[0] = (GandalfCardDef) {
         .title = "Gandalf's Power",

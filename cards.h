@@ -2,8 +2,8 @@ typedef struct {
     const char *name;
     const char *text;
     unsigned char alignment; // 0 Foe, 1 Friend,2 Special mordor card
-    unsigned char special_effect; // 0 is just text, 1 is combat, 2 is courage
-    signed char effect_variance; //How many combats or how much courage is changed
+    unsigned char special_effect; // 0 is just text, 1 is combat, 2 is courage, 3 is uruk hai, 4 is nazghul
+    signed char effect_variance; //How many combats, how much courage, or how much urukhai or nazghul to add
 }EncounterCardDef;
 
 typedef struct {
@@ -22,4 +22,4 @@ typedef struct {
 
 
 void init_gandalf_cards(GandalfCardDef card_defs[], GandalfCardState card_states[]);
-
+EncounterCardDef init_boromir_def(EncounterCardDef boromir);
