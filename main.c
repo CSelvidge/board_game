@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdint.h>
+#include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "board.h"
 #include "cards.h"
 #include "dice.h"
@@ -59,6 +61,7 @@ int main(void) {
     This is going to take some time, careful switch blocks and checks. Define dice before this so you can at least test those two things together.
     *********************/
     int8_t num_players;
+    srand(time(NULL));
     num_players = greeting(); // Greeting function ensures correct number of players(1 - 4)
     char player_names[MAX_PLAYERS][NAME_LEN] = {0};
 

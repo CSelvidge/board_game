@@ -28,7 +28,6 @@ Die init_combat_die() {
 void roll_dice(Die dice[], uint8_t count, uint8_t rolls[]) {
 
     for (uint8_t i = 0; i < count; i++) {
-        //random here
-        rolls[i] = 0; //random result instead of 0
+        rolls[i] = rand() % 6; //This corresponds to lookup arrays that are index 0 - 5, ALL dice in this program are a D6
     }
 }
