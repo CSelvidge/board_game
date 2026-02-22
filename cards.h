@@ -1,3 +1,5 @@
+#include <stdint.h>
+
 typedef struct {
     const char *name;
     const char *text;
@@ -22,4 +24,5 @@ typedef struct {
 
 
 void init_gandalf_cards(GandalfCardDef card_defs[], GandalfCardState card_states[]);
-EncounterCardDef init_boromir_def(EncounterCardDef boromir);
+void init_boromir_def(EncounterCardDef* boromir);
+void init_boromir_state(EncounterCardState* boromir);

@@ -3,14 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "board.h"
-#include "cards.h"
-#include "dice.h"
-#include "tokens.h"
+#include "game.h"
 
-#define ENCOUNTER_CARD_LEN 7
-#define NAZGHUL_MAX 9
-#define URUKHAI_MAX 6
 #define MAX_PLAYERS 4
 #define NAME_LEN 32
 
@@ -60,41 +54,15 @@ int main(void) {
     Define rules:
     This is going to take some time, careful switch blocks and checks. Define dice before this so you can at least test those two things together.
     *********************/
-    int8_t num_players;
     srand(time(NULL));
+    int8_t num_players;
+
     num_players = greeting(); // Greeting function ensures correct number of players(1 - 4)
     char player_names[MAX_PLAYERS][NAME_LEN] = {0};
 
     get_player_names(num_players, player_names);
 
-    const char* fellowship_names[] = {'Aragorn', 'Gimli', 'Legolas', 'Marry and Pippen', 'Frodo and Samwise'};
-    Die fellowship_dice[5];
-
-    for (uint8_t i = 0; i < 5; i++) {
-        fellowship_dice[i] = init_standard_die();
-    }
-
-    EncounterCardDef boromir_def;
-    boromir_def = init_boromir_def(boromir_def);
-
-
-    EncounterCardState boromir_state = {
-        .flags = 1,
-        .owned_by = 0
-    };
-
-    EncounterCardDef all_encounter_defs[42] = {0}; //Initialize safely, zone cards will be in sets of 7, so every 7 cards is a new zone
-    EncounterCardState all_encounter_states[42] = {0};
-    uint8_t zone_cards[7] = {0}; //7 indexes into the all_encounter_defs to define cards in the zone
-    GandalfCardDef gandalf_cards[5];
-    GandalfCardState gandalf_card_states[5];
-    init_gandalf_cards(gandalf_cards, gandalf_card_states);
-
-    BoardState board = init_board();
-
-    Die e_die_1 = init_standard_die();
-    Die e_die_2 = init_standard_die();
-    Die combat_die = init_combat_die();
+    start_game(num_players, player_names);
 
     return 0;
 }
@@ -117,10 +85,6 @@ void get_player_names(int8_t num_players, char player_names[][NAME_LEN]) {
 
 }
 
-void clear_buffer() {
-    char c;
-    while ((c = getchar()) != '\n' && c != EOF) {}
-}
 
 int8_t greeting() {
     int8_t num_players;
