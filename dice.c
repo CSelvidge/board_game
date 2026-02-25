@@ -7,20 +7,23 @@
            Combat die (singular)
 */
 
+
+const Die combat_die = {
+    .nsides = DICE_SIDES,
+    .side_type = SIDE_STR,
+    .sides = {'Aragorn', 'Legolas', 'Gimli', 'Marry and Pippen', 'Sauron', 'Gandalf'}
+};
+
+const Die encounter_die = {
+    .nsides = DICE_SIDES,
+    .side_type = SIDE_U8,
+    .sides = number_sides
+};
 Die init_standard_die() {
     Die die  = {
         .nsides = DICE_SIDES,
         .side_type = SIDE_U8,
         .sides = number_sides
-    };
-    return die;
-}
-
-Die init_combat_die() {
-    Die die = {
-        .nsides = DICE_SIDES,
-        .side_type = SIDE_STR,
-        .sides = name_sides
     };
     return die;
 }

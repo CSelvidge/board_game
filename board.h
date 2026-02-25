@@ -33,14 +33,14 @@ typedef enum {
 typedef struct {
     Zone current_zone;
     Destination destination;
-    uint8_t courage, uruk_hai_count, nazghul_count;
+    int8_t courage, uruk_hai_count, nazghul_count;
     uint8_t flags;
 } BoardState;
 
 /*
 Also updates the Ring Token (proxied by X until tokens are defined) to the correct position for when art assets are added in future
 */
-void update_courage(BoardState *board, int x);
+void update_courage(BoardState *board, int8_t variance);
 
 /*
 *****PROJECT HAS NOT PROGRESSED TO THE POINT TOKENS ARE DEFINED******

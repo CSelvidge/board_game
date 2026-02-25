@@ -6,7 +6,7 @@
            Cards are handled seperately
 */
 
-void init_board() {
+BoardState init_board() {
     BoardState board = {
         .current_zone = 0,
         .destination = 0,
@@ -17,4 +17,13 @@ void init_board() {
     };
 
     return board;
+}
+
+void update_courage(BoardState *board, int x) {
+    board->courage += x; //Handles neaative and positive x, giuven via card's effect_variance
+}
+
+void move_fellowship_token(int x, unsigned char zone_spaces[], unsigned char battle_helpers[]) {
+    //Check if movedment takes you past the current destination, or if you are behind the ring bearer
+    if ((x + current_place) > 
 }

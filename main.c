@@ -55,14 +55,24 @@ int main(void) {
     This is going to take some time, careful switch blocks and checks. Define dice before this so you can at least test those two things together.
     *********************/
     srand(time(NULL));
+    int8_t active = 1;
     int8_t num_players;
-
-    num_players = greeting(); // Greeting function ensures correct number of players(1 - 4)
     char player_names[MAX_PLAYERS][NAME_LEN] = {0};
+    BoardState board;
 
-    get_player_names(num_players, player_names);
+    /*This loop dictates if the game should continue, be reset, or exit*/
+    while (active) {
+        if (active == 1) {
+            num_players = greeting();
+            get_player_names(num_players, player_names);
+        }
 
-    start_game(num_players, player_names);
+        init_board(&board);
+        play_game(&board, num_players, player_names);
+
+        active = play_again(); //returns yes to start a new loop, 0 to end the loop and exit,
+                               //a return greater than 1 indicates we want to reuse the same players
+    }
 
     return 0;
 }
@@ -82,7 +92,6 @@ void get_player_names(int8_t num_players, char player_names[][NAME_LEN]) {
             clear_buffer();
         }
     }
-
 }
 
 

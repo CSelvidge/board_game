@@ -26,19 +26,53 @@ void start_game(int8_t num_players, char player_names[MAX_PLAYERS][NAME_LEN]) {
 
     Die combat_die = init_combat_die();
 
-    /*Boromir is a unique card so it has to be initialized outside of standard cards*/
-    EncounterCardDef* boromir_def;
-    EncounterCardState* boromir_state;
-    init_boromir(boromir_def, boromir_state);
-
-    EncounterCardDef all_encounter_defs[42] = {0}; //Initialize safely, zone cards will be in sets of 7, so every 7 cards is a new zone
-    EncounterCardState all_encounter_states[42] = {0};
     uint8_t zone_cards[7] = {0}; //7 indexes into the all_encounter_defs to define cards in the zone
-    GandalfCardDef gandalf_cards[5];
-    GandalfCardState gandalf_card_states[5];
-    init_gandalf_cards(gandalf_cards, gandalf_card_states);
 
     BoardState board = init_board();
 
     
+}
+
+void play_game(BoardState *board, int8_t num_players, char player_names[MAX_PLAYERS][NAME_LEN]) {
+    
+
+
+    start_game(num_players, player_names);
+}
+
+int8_t update_courage(BoardState *board, int8_t variance) {
+    board->courage += variance;
+    if (board->courage <= 0) {
+        printf("The Fellowship's courage has faltered. The game is over, and Sauron has won.\n");
+        return 1;
+    }
+    return 0;
+}
+
+int8_t update_nazgul(BoardState *board, int8_t variance) {
+    board->nazghul_count += variance;
+    if (board->nazghul_count >= NAZGHUL_MAX && !(board->flags & BF_EOWYNN)) {
+        printf("The Nazgul have overwhelmed the Fellowship. The game is over and Sauron has won.\n");
+        return 1;
+    }
+    return 0;
+}
+
+int8_t play_again() {
+    printf("Do you want to play again? (y/n): ");
+    char confirmation = getchar();
+    if (confirmation == 'y' || confirmation == 'Y') {
+        printf("Are the same players playing again? (y/n): ");
+        clear_buffer();
+        confirmation = getchar();
+        if (confirmation == 'y' || confirmation == 'Y') {
+            clear_buffer();
+            return 2; //Indiciating we wish to reuse the current players
+        } else {
+            clear_buffer();
+            return 1;
+        }
+    }
+    clear_buffer();
+    return 0;
 }
