@@ -9,7 +9,6 @@
 #define NAME_LEN 32
 
 void get_player_names(int8_t num_players, char player_names[MAX_PLAYERS][NAME_LEN]);
-void clear_buffer();
 int8_t greeting();
 
 
@@ -56,19 +55,17 @@ int main(void) {
     *********************/
     srand(time(NULL));
     int8_t active = 1;
-    int8_t num_players;
+    int8_t greeting_arr[2] = {0};
     char player_names[MAX_PLAYERS][NAME_LEN] = {0};
-    BoardState board;
 
     /*This loop dictates if the game should continue, be reset, or exit*/
     while (active) {
         if (active == 1) {
-            num_players = greeting();
-            get_player_names(num_players, player_names);
+            greeting(greeting_arr);
+            get_player_names(greeting_arr[0], player_names);
         }
 
-        init_board(&board);
-        play_game(&board, num_players, player_names);
+        start_game(greeting_arr, player_names);
 
         active = play_again(); //returns yes to start a new loop, 0 to end the loop and exit,
                                //a return greater than 1 indicates we want to reuse the same players
@@ -95,18 +92,16 @@ void get_player_names(int8_t num_players, char player_names[][NAME_LEN]) {
 }
 
 
-int8_t greeting() {
-    int8_t num_players;
-
+int8_t greeting(int8_t greeting_arr[]) {
     while (1) {
         printf("Welcome to the REPL version of Adventure to Mount doom.\nHow many players are playing? (1-4)\n: ");
-        if (scanf("%hhd", &num_players) != 1) {
+        if (scanf("%hhd", greeting_arr[0]) != 1) {
             printf("Invalid input, please enter a number between 1 and 4.\n");
             clear_buffer();
             continue;
         }
 
-        if (num_players < 1 || num_players > 4) {
+        if (greeting_arr[0] < 1 || greeting_arr[0] > 4) {
             printf("Invalid number of players, the game only supports 1-4 players.\n");
             clear_buffer();
             continue;
@@ -115,7 +110,13 @@ int8_t greeting() {
     }
 
     clear_buffer();
-    const char plural = num_players > 1 ? "s" : "";
-    printf("Game will be setup for %d player%s.\n", num_players, plural);
-    return num_players;
+    const char plural = greeting_arr[0] > 1 ? "s" : "";
+    printf("Game will be setup for %d player%s.\n", greeting_arr[0], plural);
+    printf("Do you want to play hardcore? (y/n): ");
+    char confirmation = getchar();
+    if (confirmation == 'y' || confirmation == 'Y'){
+        greeting_arr[1] = 1;
+        printf("Hardcore mode enabled.\n");
+    }
+    return greeting_arr;
 }

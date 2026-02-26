@@ -3,6 +3,10 @@
 #include "tokens.h"
 #include "dice.h"
 
+#define NAZGHUL_MAX 9
+#define URUKHAI_MAX 6
+#define ZONE_SIZE 7
+
 typedef enum {
     ZONE_RIVENDELL,
     ZONE_LOTHLORIEN,
@@ -37,10 +41,12 @@ typedef struct {
     uint8_t flags;
 } BoardState;
 
+int8_t update_courage(BoardState *board, int8_t variance); 
+int8_t update_nazgul(BoardState *board, int8_t variance);
+
 /*
 Also updates the Ring Token (proxied by X until tokens are defined) to the correct position for when art assets are added in future
 */
-void update_courage(BoardState *board, int8_t variance);
 
 /*
 *****PROJECT HAS NOT PROGRESSED TO THE POINT TOKENS ARE DEFINED******
@@ -53,7 +59,6 @@ void move_fellowship_token(int x, unsigned char zone_spaces[], unsigned char bat
 *****PROJECT HAS NOT PROGRESSED TO THE POINT TOKENS ARE DEFINED******
 Updates the current amount of nazghul or uruk-hai on the board
 */
-void update_enemy_count(BoardState *board);
 
 /*
 Update current zone by:
@@ -61,7 +66,7 @@ Update current zone by:
 --Swapping current zone cards to the new zone
 ---Checking for special gandalf card usage
 */
-void update_zone(BoardState *board, EncounterCardDef zone_cards[], EncounterCardDef all_cards[], GandalfCard gandalfcards[]);
+void update_zone(BoardState *board, int8_t zone_cards[], EncounterCardDef encounter_Card_defs[]);
 
 /*
 Set the:

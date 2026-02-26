@@ -4,8 +4,9 @@
 #define DICE_SIDES 6 //all dice are D6
 
 uint8_t number_sides[] = {1, 2, 3, 4, 5, 6};
-const char* name_sides[] = {'Aragorn', 'Legolas', 'Gimli', 'Marry and Pippen', 'Sauron', 'Gandalf'};
 
+const Die combat_die;
+const Die standard_die;
 typedef enum {SIDE_U8, SIDE_STR} SideType;
 
 typedef struct {
@@ -15,6 +16,4 @@ typedef struct {
     const void *sides;
 }Die;
 
-Die init_standard_die();
-Die init_combat_die();
-void roll_dice(Die dice[], uint8_t count, uint8_t rolls[]);
+void roll_dice(uint8_t count, uint8_t rolls[]);

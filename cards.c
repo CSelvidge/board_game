@@ -234,7 +234,7 @@ const EncounterCardVars encounter_Card_vars[42] = {
         .alignment = 0,
         .special_effect = 1,
         .combats = 1,
-        .effect_variance = 2,
+        .effect_variance = -2,
         .discardable = 0
     },
     {
@@ -255,14 +255,14 @@ const EncounterCardVars encounter_Card_vars[42] = {
         .alignment = 0,
         .special_effect = 2,
         .combats = 0,
-        .effect_variance = 3,
+        .effect_variance = -3,
         .discardable = 1
     },
     {
         .alignment = 0,
         .special_effect = 1,
         .combats = 1,
-        .effect_variance = 1,
+        .effect_variance = -1,
         .discardable = 0
     },
     {
@@ -283,14 +283,14 @@ const EncounterCardVars encounter_Card_vars[42] = {
         .alignment = 0,
         .special_effect = 1,
         .combats = 1,
-        .effect_variance = 2,
+        .effect_variance = -2,
         .discardable = 0
     },
     {
         .alignment = 0,
         .special_effect = 2,
         .combats = 0,
-        .effect_variance = 2,
+        .effect_variance = -2,
         .discardable = 1
     },
     {
@@ -311,7 +311,7 @@ const EncounterCardVars encounter_Card_vars[42] = {
         .alignment = 0,
         .special_effect = 1,
         .combats = 6, //6  is a special value that means "Check boardstate for how many battles"
-        .effect_variance = 1,
+        .effect_variance = -1,
         .discardable = 0
     },
     {
@@ -330,7 +330,7 @@ const EncounterCardVars encounter_Card_vars[42] = {
     },
     {
         .alignment = 1,
-        .special_effect = 4,
+        .special_effect = 1,
         .combats = 0,
         .effect_variance = 0,
         .discardable = 0
@@ -360,14 +360,14 @@ const EncounterCardVars encounter_Card_vars[42] = {
         .alignment = 0,
         .special_effect = 1,
         .combats = 6,
-        .effect_variance = 1,
+        .effect_variance = -1,
         .discardable = 0
     },
     {
         .alignment = 0,
-        .special_effect = 3,
+        .special_effect = 1,
         .combats = 1,
-        .effect_variance = 2,
+        .effect_variance = -2,
         .discardable = 0
     },
     {
@@ -388,14 +388,14 @@ const EncounterCardVars encounter_Card_vars[42] = {
         .alignment = 0,
         .special_effect = 2,
         .combats = 0,
-        .effect_variance = 3,
+        .effect_variance = -3,
         .discardable = 1
     },
     {
         .alignment = 0,
         .special_effect = 1,
         .combats = 1,
-        .effect_variance = 2,
+        .effect_variance = -2,
         .discardable = 0
     },
     {
@@ -409,18 +409,18 @@ const EncounterCardVars encounter_Card_vars[42] = {
         .alignment = 0,
         .special_effect = 1,
         .combats = 7, //Special value that has to correspond to number of combats, and check if isenguard has been cleared by treebeard
-        .effect_variance = 1,
+        .effect_variance = -1,
         .discardable = 0
     },
     {
-        .alignment = 1,
+        .alignment = 1, //Faramir
         .special_effect = 0,
         .combats = 1,
         .effect_variance = 0,
         .discardable = 0
     },
     {
-        .alignment = 1,
+        .alignment = 1, //Treebeard
         .special_effect = 0,
         .combats = 0,
         .effect_variance = 0,
@@ -429,22 +429,22 @@ const EncounterCardVars encounter_Card_vars[42] = {
     {
         .alignment = 0,
         .special_effect = 2,
-        .combats = 8,
-        .effect_variance = 1,
+        .combats = 8, //Special value for the Witch-Kking of Angmar combat
+        .effect_variance = -1,
         .discardable = 0
     },
     {
         .alignment = 0,
         .special_effect = 1,
         .combats = 2,
-        .effect_variance = 2,
+        .effect_variance = -2,
         .discardable = 0
     },
     {
         .alignment = 0,
         .special_effect = 2,
         .combats = 0,
-        .effect_variance = 2,
+        .effect_variance = -2,
         .discardable = 0
     },
     {
@@ -465,7 +465,7 @@ const EncounterCardVars encounter_Card_vars[42] = {
         .alignment = 0,
         .special_effect = 1,
         .combats = 7, //Special value that has to correspond to number of combats, and check if isenguard has been cleared by treebeard
-        .effect_variance = 1,
+        .effect_variance = -1,
         .discardable = 0
     },
     {
@@ -479,7 +479,7 @@ const EncounterCardVars encounter_Card_vars[42] = {
         .alignment = 3,
         .special_effect = 2,
         .combats = 0,
-        .effect_variance = 2,
+        .effect_variance = -2,
         .discardable = 0
     },
     {
