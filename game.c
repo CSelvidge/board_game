@@ -19,6 +19,7 @@ void start_game(int8_t greeting_arr[], char player_names[MAX_PLAYERS][NAME_LEN])
 
     int8_t playing = 1;
     /*Game loop time!*/
+    shitfuckass
     while (playing) {
 
     }
