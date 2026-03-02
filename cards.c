@@ -6,14 +6,25 @@
            Do not forget boromir         
 */
 
-void init_encounter_states(EncounterCardState encounter_card_states[42]) { //States are mutable so they should not be initialized via const
-    for (uint8_t i = 0; i < 42; i++) {
+/*I didnt want to hardcode all of this, anyway encounter card state initialization loop*/
+void init_encounter_states(EncounterCardState encounter_card_states[ENCOUNTER_LEN]) {
+    for (int8_t i = 0; i < 42; i++) {
         encounter_card_states[i].flags = 0;
-        encounter_card_states[i].owned_by = 255; //255 is a placeholder for board
+        encounter_card_states[i].owned_by = 255;
     }
 }
 
-const GandalfCardDef gandalf_card_defs[5] = {
+void shuffle_cards(uint8_t zone_cards[ZONE_SIZE]) { //Got this from the internet, the Fisher-Yates shuffle.
+    for (int i = ZONE_SIZE - 1; i > 0; i--) {       //I dont understand how this eliminates bias, but i have been told it does, and the internet never lies.
+        int j = rand() % (i + 1);                   //Original suffle apparently "Overshuffles" and "N shuffles was not divisible by array indexes", look into this later.
+        uint8_t temp = zone_cards[i];
+        zone_cards[i] = zone_cards[j];
+        zone_cards[j] = temp;
+    }
+}
+
+/*Gandalf cards*/
+const GandalfCardDef gandalf_card_defs[GANDALF_LEN] = { //.rodata
     {
         .title = "Gandalf's Power",
         .text = "After a roll: Turn one black encounter die to any face.",
@@ -36,10 +47,10 @@ const GandalfCardDef gandalf_card_defs[5] = {
     }
 };
 
-const GandalfCardState gandalf_card_states[5] = {
-    {0},{0},{0},{0},{0}
-};
+uint8_t zone_cards[7] = {0}; //7 indexes into the all_encounter_defs(cards.c) to define cards in the zone
+GandalfCardState gandalf_card_states[GANDALF_LEN] = {0};
 
+/*Boromir specific card initialization*/
 const EncounterCardDef boromir = {
     .name = "Boromir",
     .text = "After losing a battle against uruk-hai: Re-roll the battle die. You lose if you roll the Sauron symbol.",
@@ -53,12 +64,13 @@ const EncounterCardVars boromir_vars = {
     .discardable = 0,
 };
 
-EncounterCardState boromir_State = {
+EncounterCardState boromir_state = {
     .flags = 1,
     .owned_by = 255 //255 is a placeholder for a card not owned by a player, think of it as owned by the "board"
 };
 
-const EncounterCardDef encounter_Card_defs[42] = {
+/*I hate this, is there not a better way of doing this? Anyway this is the encounter card initialization*/
+const EncounterCardDef encounter_card_defs[ENCOUNTER_LEN] = {
     { //Lothlorien
         .name = "Cave Troll",
         .text = "There is something large waiting in the tunnels.",
@@ -229,7 +241,7 @@ const EncounterCardDef encounter_Card_defs[42] = {
     }
 };
 
-const EncounterCardVars encounter_Card_vars[42] = {
+const EncounterCardVars encounter_card_vars[ENCOUNTER_LEN] = {
     {
         .alignment = 0,
         .special_effect = 1,
@@ -526,3 +538,4 @@ const EncounterCardVars encounter_Card_vars[42] = {
     }
 };
 
+/*I hated that, a lot*/

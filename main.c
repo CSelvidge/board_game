@@ -5,75 +5,38 @@
 #include <time.h>
 #include "game.h"
 
-#define MAX_PLAYERS 4
-#define NAME_LEN 32
 
 void get_player_names(int8_t num_players, char player_names[MAX_PLAYERS][NAME_LEN]);
 int8_t greeting();
-
+int8_t ask_hardcore();
 
 int main(void) {
-    /*********************
-    ----------TODO ----------
-    Define dice:
-    1 - Fellowship movement dice (gimli, legolas, arigorn, M&P, F&S) -- I believe this is done
-    2 - Combat die (Aragorn, legolas, gimli, M&P, Sauron, Gandalf) -- I believe this is done
-    3 - Encounter number dice (2 dice standard ints 1 - 6) -- I believe this is done
-
-    Define tokens:
-    1 - Urak-hai (5 Standard 1 Cheiftan) ------------ See following comment
-    2 - Nazghul (8 standard 1 Witch King) -- I do not believe these tokens need to exist in a defined state,
-                                            However a struct may need to exist for board position or token art assets in future
-    3 - Fellowship members (Gimli, Aragorn, Legolas, M&P, F&S) - State struct is required for current position and to easily check to see if can assist in combat etc.
-                                                                Make this struct LIGHT and CACHE friendly
-
-    4 - Gandalf and Treebird tokens DON'T FORGET -- These are covered as bitflags in the BoardState struct,
-                                                    but art assets may require a struct state
-    
-    Define cards:
-    Card sets per each destination zones (Rivendell - > Minas Morgul) -- I can see no way but to hardcode definitions for all cards, seperated by zone, into arrays.
-                                                                        Consider a master array, or avoiding that, use enum Zone in board.h
-    Don't forget Boromir
-    Gandalf cards -- I belive this is done
-
-    Define board:
-    Perhaps an array for the spaces between destination spaces. Index is the distance from the previous destination and the array itself can use [0,1,2] as unsigned chars
-                                                                                                                                                 0 for standard square
-                                                                                                                                                 1 for hope loss space
-                                                                                                                                                 2 nazghul space
-    
-    Array of known destinations, or maybe a struct holds the destinations, won't know till we start.
-    Array of characters that can assist the ring bearer in combat
-
-    define structs:
-    Cards will probably need to be a struct with a Text, Alignment, Zone, maybe art asset picture later?
-    Characters will probably need to be structs that way we can easily connect them to dice sides and tokens for map movement
-
-
-    Define rules:
-    This is going to take some time, careful switch blocks and checks. Define dice before this so you can at least test those two things together.
-    *********************/
     srand(time(NULL));
-    int8_t active = 1;
-    int8_t greeting_arr[2] = {0};
+    int8_t active = (PLAY_AGAIN | FRESH);
+    int8_t num_players = 0;
+    int8_t hardcore = 0;
     char player_names[MAX_PLAYERS][NAME_LEN] = {0};
 
-    /*This loop dictates if the game should continue, be reset, or exit*/
+    /*This loop into switch dictates if the game should continue, be reset, or exit*/
     while (active) {
-        if (active == 1) {
-            greeting(greeting_arr);
-            get_player_names(greeting_arr[0], player_names);
+    if (active & PLAY_AGAIN){
+        if ((active & FRESH) || !(active & SAME_PLAYERS)) {
+            num_players = greeting();
+            get_player_names(num_players, player_names);
         }
 
-        start_game(greeting_arr, player_names);
-
-        active = play_again(); //returns yes to start a new loop, 0 to end the loop and exit,
-                               //a return greater than 1 indicates we want to reuse the same players
+        if (active & FRESH) {
+            hardcore = ask_hardcore();
+        } else if (active & TOGGLE_HARDCORE) {
+            hardcore = !hardcore;
+        }
+    }
+        start_game(num_players, hardcore, player_names);
+        active = play_again(); //returns active as bitpacked
     }
 
     return 0;
 }
-
 
 void get_player_names(int8_t num_players, char player_names[][NAME_LEN]) {
 
@@ -91,17 +54,17 @@ void get_player_names(int8_t num_players, char player_names[][NAME_LEN]) {
     }
 }
 
-
-int8_t greeting(int8_t greeting_arr[]) {
+int8_t greeting() {
+    int8_t num_players = 0;
     while (1) {
         printf("Welcome to the REPL version of Adventure to Mount doom.\nHow many players are playing? (1-4)\n: ");
-        if (scanf("%hhd", greeting_arr[0]) != 1) {
+        if (scanf("%hhd", num_players) != 1) {
             printf("Invalid input, please enter a number between 1 and 4.\n");
             clear_buffer();
             continue;
         }
 
-        if (greeting_arr[0] < 1 || greeting_arr[0] > 4) {
+        if (num_players < 1 || num_players > 4) {
             printf("Invalid number of players, the game only supports 1-4 players.\n");
             clear_buffer();
             continue;
@@ -110,13 +73,20 @@ int8_t greeting(int8_t greeting_arr[]) {
     }
 
     clear_buffer();
-    const char plural = greeting_arr[0] > 1 ? "s" : "";
-    printf("Game will be setup for %d player%s.\n", greeting_arr[0], plural);
-    printf("Do you want to play hardcore? (y/n): ");
-    char confirmation = getchar();
-    if (confirmation == 'y' || confirmation == 'Y'){
-        greeting_arr[1] = 1;
-        printf("Hardcore mode enabled.\n");
-    }
-    return greeting_arr;
+    const char plural = num_players > 1 ? "s" : "";
+    printf("Game will be setup for %d player%s.\n", num_players, plural);
+    return num_players;
 }
+
+int8_t ask_hardcore() {
+    printf("Do you want to play hardcore?");
+    char confirmation = getchar();
+    if (confirmation == 'y' || confirmation == 'Y') {
+        return 1;
+    }
+
+    return 0;
+}
+
+
+

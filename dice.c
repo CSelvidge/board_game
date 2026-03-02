@@ -3,7 +3,7 @@
 const Die combat_die = {
     .nsides = DICE_SIDES,
     .side_type = SIDE_STR,
-    .sides = {'Aragorn', 'Legolas', 'Gimli', 'Marry and Pippen', 'Sauron', 'Gandalf'}
+    .sides = {'Aragorn', 'Gimli', 'Legolas', 'Marry and Pippen', 'Sauron', 'Gandalf'}
 };
 
 const Die standard_die = {

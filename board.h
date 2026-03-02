@@ -7,6 +7,8 @@
 #define URUKHAI_MAX 6
 #define ZONE_SIZE 7
 
+const char zone_arrays[6][9];
+
 typedef enum {
     ZONE_RIVENDELL,
     ZONE_LOTHLORIEN,
@@ -41,37 +43,11 @@ typedef struct {
     uint8_t flags;
 } BoardState;
 
+BoardState init_board();
+
 int8_t update_courage(BoardState *board, int8_t variance); 
 int8_t update_nazgul(BoardState *board, int8_t variance);
 
-/*
-Also updates the Ring Token (proxied by X until tokens are defined) to the correct position for when art assets are added in future
-*/
-
-/*
-*****PROJECT HAS NOT PROGRESSED TO THE POINT TOKENS ARE DEFINED******
-Moves the correct fellowship token (proxied by X until tokens are defined) to the corrent spot on the current zone array and update which fellowship members can assist in combat
-*/
 void move_fellowship_token(int x, unsigned char zone_spaces[], unsigned char battle_helpers[]);
 
-
-/*
-*****PROJECT HAS NOT PROGRESSED TO THE POINT TOKENS ARE DEFINED******
-Updates the current amount of nazghul or uruk-hai on the board
-*/
-
-/*
-Update current zone by:
--Setting new destination
---Swapping current zone cards to the new zone
----Checking for special gandalf card usage
-*/
-void update_zone(BoardState *board, int8_t zone_cards[], EncounterCardDef encounter_Card_defs[]);
-
-/*
-Set the:
--Default destination
---Default Zone cards
---Default board state
-*/
-BoardState init_board();
+void update_zone(BoardState *board, int8_t zone_cards[]);

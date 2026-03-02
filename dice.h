@@ -7,6 +7,7 @@ uint8_t number_sides[] = {1, 2, 3, 4, 5, 6};
 
 const Die combat_die;
 const Die standard_die;
+
 typedef enum {SIDE_U8, SIDE_STR} SideType;
 
 typedef struct {
