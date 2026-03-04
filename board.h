@@ -1,3 +1,6 @@
+#ifndef BOARD_H
+#define BOARD_H
+
 #include <stdint.h>
 #include "cards.h"
 #include "tokens.h"
@@ -7,7 +10,7 @@
 #define URUKHAI_MAX 6
 #define ZONE_SIZE 7
 
-const char zone_arrays[6][9];
+extern const char zone_arrays[6][9];
 
 typedef enum {
     ZONE_RIVENDELL,
@@ -48,6 +51,9 @@ BoardState init_board();
 int8_t update_courage(BoardState *board, int8_t variance); 
 int8_t update_nazgul(BoardState *board, int8_t variance);
 
-void move_fellowship_token(int x, unsigned char zone_spaces[], unsigned char battle_helpers[]);
+void move_fellowship_token(FellowshipToken token, const char zone_arrays[6][9], unsigned char battle_helpers[]);
 
 void update_zone(BoardState *board, int8_t zone_cards[]);
+
+
+#endif

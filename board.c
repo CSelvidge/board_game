@@ -39,7 +39,7 @@ int8_t update_nazgul(BoardState *board, int8_t variance) {
     return 0;
 }
 
-void move_fellowship_token(int x, unsigned char zone_spaces[], unsigned char battle_helpers[]) {
+void move_fellowship_token(FellowshipToken token,const char zone_arrays[6][9], unsigned char battle_helpers[]) {
     //Check if movedment takes you past the current destination, or if you are behind the ring bearer
     //Not implimented as of now
     ;
@@ -61,15 +61,15 @@ void update_zone(BoardState *board, int8_t zone_cards[]) {
 
 const char zone_arrays[6][9] =
 {
-    {'R', '-', '-', 'N', '-', '-', '-', 'C', 'L'},
+    {'R', '-', '-', 'N', '-', '-', '-', 'C', 'L'}, //Zone 0 from Rivendell to Lothlorian
 
-    {'L', '-', 'C', '-', '-', '-', '-', 'N', 'R'},
+    {'L', '-', 'C', '-', '-', '-', '-', 'N', 'R'}, //Zone 1 from Lothlorian to Rohan
 
-    {'R', '-', '-', '-', 'N', '-', 'C', '-', 'H'},
+    {'R', '-', '-', '-', 'N', '-', 'C', '-', 'H'}, //Zone 2 from Rohan to Helm's Deep
 
-    {'H', '-', '-', 'C', '-', '-', 'N', '-', 'G'},
+    {'H', '-', '-', 'C', '-', '-', 'N', '-', 'G'}, //Zone 3 from Helm's Deep to Gondor
 
-    {'G', 'C', '-', 'N', '-', 'N', '-', '-', 'M'},
+    {'G', 'C', '-', 'N', '-', 'N', '-', '-', 'M'}, //Zone 4 from Gondor to Minas Morgul
 
-    {'M', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'D'}
+    {'M', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'D'} //Zone 5 from Minas Morgul to Mount Doom
 };

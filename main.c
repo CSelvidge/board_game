@@ -24,64 +24,63 @@ int main(void) {
             num_players = greeting();
             get_player_names(num_players, player_names);
         }
-
         if (active & FRESH) {
             hardcore = ask_hardcore();
-        } else if (active & TOGGLE_HARDCORE) {
+        }else if (active & TOGGLE_HARDCORE) {
             hardcore = !hardcore;
         }
     }
         start_game(num_players, hardcore, player_names);
-        active = play_again(); //returns active as bitpacked
+        active = play_again(hardcore); //returns active as bitpacked
     }
 
     return 0;
 }
 
 void get_player_names(int8_t num_players, char player_names[][NAME_LEN]) {
+    char confirmation[8] = {0};
+    char message[128] = {0};
 
     for (int8_t i = 0; i < num_players; i++) {
-        char confirmed = 'n';
-        while (confirmed != 'y' && confirmed != 'Y'){
-            printf("Please enter the name of player %d: ", i + 1);
-            if (fgets(player_names[i], NAME_LEN, stdin) != NULL) {
-                player_names[i][strcspn(player_names[i], "\n")] = '\0';
-            }
-            printf("Is the name '%s' correct for player %d? (y/n): ", player_names[i], i + 1);
-            confirmed = getchar();
-            clear_buffer();
+        snprintf(message, sizeof(message), "Please enter the name of player %d: ", i + 1);
+        get_user_input(message, player_names[i], NAME_LEN);
+
+        snprintf(message, sizeof(message), "You entered %s, is that correct? (y/n): ", player_names[i]);
+        get_user_input(message, confirmation, sizeof(confirmation));
+
+        while (confirmation[0] != 'y' && confirmation[0] != 'Y') {
+            snprintf(message, sizeof(message), "Please enter the name of player %d: ", i + 1);
+            get_user_input(message, player_names[i], NAME_LEN);
+            snprintf(message, sizeof(message), "You entered %s, is that correct? (y/n): ", player_names[i]);
+            get_user_input(message, confirmation, sizeof(confirmation));
         }
     }
 }
 
 int8_t greeting() {
-    int8_t num_players = 0;
+    char confirmation[8] = {0};
     while (1) {
-        printf("Welcome to the REPL version of Adventure to Mount doom.\nHow many players are playing? (1-4)\n: ");
-        if (scanf("%hhd", num_players) != 1) {
-            printf("Invalid input, please enter a number between 1 and 4.\n");
-            clear_buffer();
+        get_user_input("Welcome to the REPL version of Adventure to Mount doom.\nHow many players are playing? (1-4): ", confirmation, sizeof(confirmation));
+        confirmation[0] = (confirmation[0] - '0'); //Convert ascii to pure int form
+
+        if (confirmation[0] < 1 || confirmation[0] > 4) {
+            printf("Invalid number of players, the game only supports 1-4 players.\n");
             continue;
         }
 
-        if (num_players < 1 || num_players > 4) {
-            printf("Invalid number of players, the game only supports 1-4 players.\n");
-            clear_buffer();
-            continue;
-        }
         break;
+
     }
 
-    clear_buffer();
-    const char plural = num_players > 1 ? "s" : "";
-    printf("Game will be setup for %d player%s.\n", num_players, plural);
-    return num_players;
+    const char *plural = confirmation[0] > 1 ? "s" : "";
+    printf("Game will be setup for %d player%s.\n", confirmation[0], plural);
+    return confirmation[0]; //Portable because if the system implimentation is signed or unsigned char 1-4 fits in int8_t
 }
 
 int8_t ask_hardcore() {
-    printf("Do you want to play hardcore?");
-    char confirmation = getchar();
-    if (confirmation == 'y' || confirmation == 'Y') {
+    char confirmation[8] = {0};
+    get_user_input("Do you want to play hardcore? (y/n): ", confirmation, sizeof(confirmation));
+    if (confirmation[0] == 'y' || confirmation[0] == 'Y') {
         return 1;
     }
 

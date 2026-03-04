@@ -1,3 +1,7 @@
+#ifndef GAME_H
+#define GAME_H
+
+
 #include <stdio.h>
 #include "board.h"
 #include "cards.h"
@@ -13,7 +17,12 @@
 #define TOGGLE_HARDCORE (1 << 2)
 #define FRESH (1 << 3)
 
-void play_game(int8_t num_players, char player_names[MAX_PLAYERS][NAME_LEN]);
-void clear_buffer();
 
-int8_t play_again();
+extern const char* fellowship_names[];
+
+void play_game(int8_t num_players, char player_names[MAX_PLAYERS][NAME_LEN]);
+char get_user_input(const char *message, char *buffer, size_t return_size);
+
+int8_t play_again(int8_t hardcore);
+
+#endif

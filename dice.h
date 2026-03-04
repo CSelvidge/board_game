@@ -1,12 +1,11 @@
+#ifndef DICE_H
+#define DICE_H
+
 #include <stdint.h>
 #include <stddef.h>
+#include <stdlib.h>
 
 #define DICE_SIDES 6 //all dice are D6
-
-uint8_t number_sides[] = {1, 2, 3, 4, 5, 6};
-
-const Die combat_die;
-const Die standard_die;
 
 typedef enum {SIDE_U8, SIDE_STR} SideType;
 
@@ -17,4 +16,14 @@ typedef struct {
     const void *sides;
 }Die;
 
-void roll_dice(uint8_t count, uint8_t rolls[]);
+extern uint8_t number_sides[DICE_SIDES];
+extern const char *name_sides[DICE_SIDES];
+
+extern const Die combat_die;
+extern const Die standard_die;
+
+extern int8_t rolls[5];
+
+void roll_dice(int8_t count, int8_t rolls[]);
+
+#endif

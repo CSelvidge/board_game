@@ -1,5 +1,9 @@
+#ifndef CARDS_H
+#define CARDS_H
+
 #include <stdint.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #define BOARD_OWNED 255 //Cards that are not owned by a player will default to being owned by the board
 #define ENCOUNTER_LEN 42
@@ -36,12 +40,14 @@ typedef struct {
 void init_encounter_states(EncounterCardState encounter_card_states[ENCOUNTER_LEN]); //States are mutable so they should not be initialized via const
 void shuffle_cards(uint8_t zone_cards[ZONE_SIZE]);
 
-uint8_t zone_cards[7];
-const GandalfCardDef gandalf_card_defs[GANDALF_LEN];
-GandalfCardState gandalf_card_states[GANDALF_LEN];
-const EncounterCardDef boromir;
-const EncounterCardVars boromir_vars;
-EncounterCardState boromir_state;
-const EncounterCardDef encounter_card_defs[ENCOUNTER_LEN];
-const EncounterCardVars encounter_card_vars[ENCOUNTER_LEN];
-EncounterCardState encounter_card_states[ENCOUNTER_LEN];
+extern uint8_t zone_cards[7];
+extern const GandalfCardDef gandalf_card_defs[GANDALF_LEN];
+extern GandalfCardState gandalf_card_states[GANDALF_LEN];
+extern const EncounterCardDef boromir;
+extern const EncounterCardVars boromir_vars;
+extern EncounterCardState boromir_state;
+extern const EncounterCardDef encounter_card_defs[ENCOUNTER_LEN];
+extern const EncounterCardVars encounter_card_vars[ENCOUNTER_LEN];
+extern EncounterCardState encounter_card_states[ENCOUNTER_LEN];
+
+#endif
