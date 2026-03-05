@@ -56,7 +56,7 @@ int8_t play_again(int8_t hardcore) {
     return active;
 }
 
-char get_user_input(const char *message, char *buffer, size_t return_size) {
+void get_user_input(const char *message, char *buffer, size_t return_size) {
     printf("%s", message);
     fgets(buffer, return_size, stdin);
     size_t newline_pos = strcspn(buffer, "\n");

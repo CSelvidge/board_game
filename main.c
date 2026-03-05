@@ -1,10 +1,6 @@
-#include <stdio.h>
-#include <stdint.h>
-#include <stdlib.h>
 #include <string.h>
 #include <time.h>
 #include "game.h"
-
 
 void get_player_names(int8_t num_players, char player_names[MAX_PLAYERS][NAME_LEN]);
 int8_t greeting();

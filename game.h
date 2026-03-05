@@ -21,7 +21,7 @@
 extern const char* fellowship_names[];
 
 void play_game(int8_t num_players, char player_names[MAX_PLAYERS][NAME_LEN]);
-char get_user_input(const char *message, char *buffer, size_t return_size);
+void get_user_input(const char *message, char *buffer, size_t return_size);
 
 int8_t play_again(int8_t hardcore);
 
