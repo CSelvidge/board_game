@@ -1,8 +1,8 @@
 #ifndef GAME_H
 #define GAME_H
 
-
 #include <stdio.h>
+#include <GLFW/glfw3.h>
 #include "board.h"
 #include "cards.h"
 #include "dice.h"
@@ -16,7 +16,6 @@
 #define SAME_PLAYERS (1 << 1)
 #define TOGGLE_HARDCORE (1 << 2)
 #define FRESH (1 << 3)
-
 
 extern const char* fellowship_names[];
 

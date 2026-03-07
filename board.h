@@ -8,7 +8,7 @@
 
 #define NAZGHUL_MAX 9
 #define URUKHAI_MAX 6
-#define ZONE_SIZE 7
+#define ZONE_SIZE 9
 
 extern const char zone_arrays[6][9];
 
@@ -44,6 +44,7 @@ typedef struct {
     Destination destination;
     int8_t courage, uruk_hai_count, nazghul_count;
     uint8_t flags;
+    int8_t frodo_advance;
 } BoardState;
 
 BoardState init_board();
@@ -51,9 +52,8 @@ BoardState init_board();
 int8_t update_courage(BoardState *board, int8_t variance); 
 int8_t update_nazgul(BoardState *board, int8_t variance);
 
-void move_fellowship_token(FellowshipToken token, const char zone_arrays[6][9], unsigned char battle_helpers[]);
+void move_fellowship_token(FellowshipToken fellowship[5], int8_t index, BoardState *board, const char zone_arrays[6][9], int8_t variance);
 
 void update_zone(BoardState *board, int8_t zone_cards[]);
-
 
 #endif

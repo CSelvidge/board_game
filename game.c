@@ -6,8 +6,7 @@
 void start_game(int8_t num_players, int8_t hardcore,  char player_names[MAX_PLAYERS][NAME_LEN]) {
     BoardState board;
     init_board(&board);
-    const char* fellowship_names[] = {"Aragorn", "Gimli", "Legolas", "Marry and Pippen", "Frodo and Samwise"};
-    int8_t battle_helpers[4] = {1, 1, 1, 1}; //All members of the fellowship spawn in assistance of the ring bearer, this indexes with the combat die
+    const char* fellowship_names[] = {"Aragorn", "Gimli", "Legolas", "Marry and Pippen", "Frodo and Samwise"}; //All members of the fellowship spawn in assistance of the ring bearer, this indexes with the combat die
 
     if (hardcore) { //If hardcore mode is enabled, we need to track which player owns which friend cards for combat purposes
         uint8_t player_friends[MAX_PLAYERS][9] = {0}; //9 friend cards is the max in the game, hardcore mode forces players to only use the friends THEY own
@@ -25,9 +24,8 @@ void start_game(int8_t num_players, int8_t hardcore,  char player_names[MAX_PLAY
     int8_t playing = 1;
     /*Game loop time!*/
     while (playing) {
-        printf("Well we at least got this far.\n");
-        printf("%d\n", hardcore);
-        break;
+        /*openGL call to draw a window*/
+        /*What to put on the window*/
     }
 }
 /*
@@ -36,7 +34,7 @@ void start_game(int8_t num_players, int8_t hardcore,  char player_names[MAX_PLAY
 int8_t play_again(int8_t hardcore) {
     int8_t active = 0;
     char confirmation[8] = {0};
-    char message[128];
+    char message[128] = {0};
 
     get_user_input("Do you want to play again? (y/n): ", confirmation, sizeof(confirmation));
     if (confirmation[0] == 'y' || confirmation[0] == 'Y') {

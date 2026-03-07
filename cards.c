@@ -14,8 +14,8 @@ void init_encounter_states(EncounterCardState encounter_card_states[ENCOUNTER_LE
     }
 }
 
-void shuffle_cards(uint8_t zone_cards[ZONE_SIZE]) { //Got this from the internet, the Fisher-Yates shuffle.
-    for (int i = ZONE_SIZE - 1; i > 0; i--) {       //I dont understand how this eliminates bias, but i have been told it does, and the internet never lies.
+void shuffle_cards(uint8_t zone_cards[ZONE_CARD_SIZE]) { //Got this from the internet, the Fisher-Yates shuffle.
+    for (int i = ZONE_CARD_SIZE - 1; i > 0; i--) {       //I dont understand how this eliminates bias, but i have been told it does, and the internet never lies.
         int j = rand() % (i + 1);                   //Original suffle apparently "Overshuffles" and "N shuffles was not divisible by array indexes", look into this later.
         uint8_t temp = zone_cards[i];
         zone_cards[i] = zone_cards[j];

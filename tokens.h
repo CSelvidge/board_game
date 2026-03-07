@@ -2,9 +2,12 @@
 #define TOKENS_H
 
 #include <stdint.h>
+
 typedef struct {
     char initial;
-    uint8_t row, column;
+    int8_t row, column, assisting, active;
 }FellowshipToken;
+enum {ARAGORN, GIMLI, LEGOLAS, MERRY_PIPPIN, FRODO_SAM};
+FellowshipToken fellowship[5];
 
 #endif

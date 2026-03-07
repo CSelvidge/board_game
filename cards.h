@@ -8,7 +8,7 @@
 #define BOARD_OWNED 255 //Cards that are not owned by a player will default to being owned by the board
 #define ENCOUNTER_LEN 42
 #define GANDALF_LEN 5
-#define ZONE_SIZE 7
+#define ZONE_CARD_SIZE 7
 
 typedef struct {
     const char *name; //8 bytes
@@ -38,7 +38,7 @@ typedef struct {
 }GandalfCardState;
 
 void init_encounter_states(EncounterCardState encounter_card_states[ENCOUNTER_LEN]); //States are mutable so they should not be initialized via const
-void shuffle_cards(uint8_t zone_cards[ZONE_SIZE]);
+void shuffle_cards(uint8_t zone_cards[ZONE_CARD_SIZE]);
 
 extern uint8_t zone_cards[7];
 extern const GandalfCardDef gandalf_card_defs[GANDALF_LEN];
