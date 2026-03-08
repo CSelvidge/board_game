@@ -36,7 +36,8 @@ typedef enum {
     BF_EOWYNN = 1u << 0, // If eowynn is successful the nazghul cannot end the game
     BF_GANDALF = 1u << 1, // If gandalf is in helms deep you cannot use gandalf cards
     BF_TREEBEARD = 1u << 2, // If treebeard is in play you can defeat the uruk hai cheiftan
-    BF_BOROMIR = 1u << 3 // Boromir is a unique card not attached to any zone that allows you to reroll one defeat against a uruk hai
+    BF_BOROMIR = 1u << 3, // Boromir is a unique card not attached to any zone that allows you to reroll one defeat against a uruk hai
+    BF_HARDCORE = 1u << 4 // Is the Game set to hardcore
 }BoardFlags;
 
 typedef struct {
@@ -52,7 +53,8 @@ BoardState init_board();
 int8_t update_courage(BoardState *board, int8_t variance); 
 int8_t update_nazgul(BoardState *board, int8_t variance);
 
-void move_fellowship_token(FellowshipToken fellowship[5], int8_t index, BoardState *board, const char zone_arrays[6][9], int8_t variance);
+void move_fellowship_roll(FellowshipToken fellowship[], FellowshipToken *frodo, int8_t index, BoardState *board, const char zone_arrays[6][9], int8_t variance);
+void move_frodo_roll(FellowshipToken fellowship[], FellowshipToken *frodo, int8_t index, BoardState *board, const char zone_arrays[6][9], int8_t variance);
 
 void update_zone(BoardState *board, int8_t zone_cards[]);
 

@@ -10,6 +10,7 @@ void start_game(int8_t num_players, int8_t hardcore,  char player_names[MAX_PLAY
 
     if (hardcore) { //If hardcore mode is enabled, we need to track which player owns which friend cards for combat purposes
         uint8_t player_friends[MAX_PLAYERS][9] = {0}; //9 friend cards is the max in the game, hardcore mode forces players to only use the friends THEY own
+        board.flags |= BF_HARDCORE;
     } else {
         uint8_t global_friends[9] = {0};
     }
