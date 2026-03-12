@@ -17,11 +17,16 @@
 #define TOGGLE_HARDCORE (1 << 2)
 #define FRESH (1 << 3)
 
+typedef struct GameState {
+    BoardState board;
+    FellowshipToken fellowship[5];
+}GameState;
+
 extern const char* fellowship_names[];
 
 void play_game(int8_t num_players, char player_names[MAX_PLAYERS][NAME_LEN]);
 void get_user_input(const char *message, char *buffer, size_t return_size);
-
+void init_game_state(GameState *game);
 int8_t play_again(int8_t hardcore);
 
 #endif

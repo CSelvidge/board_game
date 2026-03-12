@@ -34,13 +34,16 @@ typedef struct {
 }GandalfCardDef;
 
 typedef struct {
-    uint8_t  discarded; // Card still in play or not
+    uint8_t discarded; // Card used / discarded
+    uint8_t in_play; //Card in the player's hand
 }GandalfCardState;
 
 void init_encounter_states(EncounterCardState encounter_card_states[ENCOUNTER_LEN]); //States are mutable so they should not be initialized via const
-void shuffle_cards(uint8_t zone_cards[ZONE_CARD_SIZE]);
+void shuffle_cards(uint8_t cards[], size_t card_amount);
+int8_t draw_gandalf_card(uint8_t gandalf_cards[]);
 
 extern uint8_t zone_cards[7];
+extern uint8_t gandalf_cards[5];
 extern const GandalfCardDef gandalf_card_defs[GANDALF_LEN];
 extern GandalfCardState gandalf_card_states[GANDALF_LEN];
 extern const EncounterCardDef boromir;

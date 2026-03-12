@@ -1,8 +1,8 @@
 #include "dice.h"
 
 const char *name_sides[] = {"Aragorn", "Gimli", "Legolas", "Marry and Pippen", "Sauron", "Gandalf"};
-int8_t rolls[5] = {0};
 uint8_t number_sides[] = {1, 2, 3, 4, 5, 6};
+int8_t rolls[5] = {0};
 
 const Die combat_die = {
     .nsides = DICE_SIDES,

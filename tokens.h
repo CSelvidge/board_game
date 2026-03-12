@@ -7,7 +7,8 @@ typedef struct {
     char initial;
     int8_t row, column, assisting, active;
 }FellowshipToken;
-enum {ARAGORN, GIMLI, LEGOLAS, MERRY_PIPPIN, FRODO_SAM};
-FellowshipToken fellowship[5];
+
+enum {ARAGORN, GIMLI, LEGOLAS, MERRY_PIPPIN, FRODO_SAM, FELLOWSHIP_LENGTH};
+
 
 #endif

@@ -14,13 +14,22 @@ void init_encounter_states(EncounterCardState encounter_card_states[ENCOUNTER_LE
     }
 }
 
-void shuffle_cards(uint8_t zone_cards[ZONE_CARD_SIZE]) { //Got this from the internet, the Fisher-Yates shuffle.
-    for (int i = ZONE_CARD_SIZE - 1; i > 0; i--) {       //I dont understand how this eliminates bias, but i have been told it does, and the internet never lies.
+void shuffle_cards(uint8_t cards[], size_t card_amount) { //Got this from the internet, the Fisher-Yates shuffle.
+    for (int i = card_amount - 1; i > 0; i--) {       //I dont understand how this eliminates bias, but i have been told it does, and the internet never lies.
         int j = rand() % (i + 1);                   //Original suffle apparently "Overshuffles" and "N shuffles was not divisible by array indexes", look into this later.
-        uint8_t temp = zone_cards[i];
-        zone_cards[i] = zone_cards[j];
-        zone_cards[j] = temp;
+        uint8_t temp = cards[i];
+        cards[i] = cards[j];
+        cards[j] = temp;
     }
+}
+/*Simulates drawing a card by assigning the next available card to active*/
+int8_t draw_gandalf_card(uint8_t gandalf_cards[]) {
+    for (int8_t i = 0; i < GANDALF_LEN; i++) {
+        if (gandalf_card_states[gandalf_cards[i]].discarded || gandalf_card_states[gandalf_cards[i]].in_play) continue;
+        gandalf_card_states[gandalf_cards[i]].in_play = 1;
+        return 1; //If we never get to 1, every card was either discarded or is already in play (in the players hand), so we cannot draw a new card.
+    }
+    return 0;
 }
 
 /*Gandalf cards*/
@@ -48,6 +57,7 @@ const GandalfCardDef gandalf_card_defs[GANDALF_LEN] = { //.rodata
 };
 
 uint8_t zone_cards[7] = {0}; //7 indexes into the all_encounter_defs(cards.c) to define cards in the zone
+uint8_t gandalf_cards[5] = {0, 1, 2, 3, 4};
 GandalfCardState gandalf_card_states[GANDALF_LEN] = {0};
 
 /*Boromir specific card initialization*/
@@ -200,7 +210,7 @@ const EncounterCardDef encounter_card_defs[ENCOUNTER_LEN] = {
         .text = "You must re-roll one of the multicolored Fellowship die that is places on the dice board"
     },
     {
-        .name = "Armyt of the Dead",
+        .name = "Army of the Dead",
         .text = "Place this card on top of a card to the left or right of it. That card remains invalid until the Army of the Dead moves on."
     },
     {

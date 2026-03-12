@@ -1,17 +1,8 @@
-#ifndef BOARD_H
-#define BOARD_H
+#ifndef GAME_STATE_H
+#define GAME_STATE_H
 
-
-#include <stdint.h>
-#include "cards.h"
+#include "board.h"
 #include "tokens.h"
-#include "dice.h"
-
-#define NAZGHUL_MAX 9
-#define URUKHAI_MAX 6
-#define ZONE_SIZE 9
-
-extern const char zone_arrays[6][9];
 
 typedef enum {
     ZONE_RIVENDELL,
@@ -44,8 +35,7 @@ typedef enum {
 typedef enum {
     MT_BOARD,
     MT_ROLL
-} MoveType;
-
+}MoveType;
 
 typedef struct {
     Zone current_zone;
@@ -55,16 +45,11 @@ typedef struct {
     int8_t frodo_advance;
 } BoardState;
 
-BoardState init_board();
+typedef struct {
+    BoardState board;
+    FellowshipToken fellowship[5];
+}GameState;
 
-int8_t update_courage(BoardState *board, int8_t variance); 
-int8_t update_nazgul(BoardState *board, int8_t variance);
-
-typedef struct GameState GameState;
-
-void move_fellowship(GameState *game, int8_t index, const char zone_arrays[6][9], int8_t variance, MoveType movetype);
-void move_frodo(GameState *game, int8_t index, const char zone_arrays[6][9], int8_t variance, MoveType movetype);
-
-void update_zone_cards(BoardState *board, int8_t zone_cards[]);
 
 #endif
+
