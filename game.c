@@ -3,6 +3,8 @@
 #include "dice.h"
 #include "cards.h"
 
+#define SCREEN_WIDTH 120
+
 
 void init_game_state(GameState *game) {
     memset(&game->move_cntx.board, 0, sizeof(BoardState));
@@ -57,6 +59,7 @@ void start_game(int8_t num_players, int8_t hardcore,  char player_names[MAX_PLAY
     int8_t playing = 1;
     /*Game loop time!*/
     while (playing) {
+        /*Basic test loop
         for (int8_t i = 0; i < ZONE_COUNT; i++) {
             for (int8_t j = 0; j < ZONE_CARD_SIZE; j++){
                 printf("%s\n", encounter_card_defs[game.zone_cards[j]].name);
@@ -67,7 +70,8 @@ void start_game(int8_t num_players, int8_t hardcore,  char player_names[MAX_PLAY
             shuffle_cards(game.zone_cards, ZONE_CARD_SIZE);
         }
     printf("Size of one token: %zu\n", sizeof(FellowshipToken));
-    printf("Size of token array: %zu\n", sizeof(game.move_cntx.fellowship));
+    printf("Size of token array: %zu\n", sizeof(game.move_cntx.fellowship));*/
+    draw_screen(&game, player_names, num_players);
     playing = 0;
     }
 }
@@ -107,4 +111,21 @@ void get_user_input(const char *message, char *buffer, size_t return_size) {
     }
     buffer[newline_pos] = '\0';
 }
+/*
+  Primary function to handle the REPL implimentation
+  To make the function smaller, and easier to read and modify -
+  It will handle much of the "calling" logic and allow subfunctions -
+  to handle much of the actual drawing
+*/
+void draw_screen(GameState *game, char player_names[][NAME_LEN], int8_t num_players) {
+    uint8_t active_rows = {0}; //Bitpacked bytes
+    uint8_t drawn_rows = {0}; 
 
+    for (uint8_t i = 0; i < FELLOWSHIP_LENGTH - 1; i++) {
+        if (game->move_cntx.fellowship[i].row != game->move_cntx.fellowship[4].row) {
+            active_rows[i] = game->move_cntx.fellowship[i].row;
+        } else {
+            active_rows[i] = 0;
+        }
+    }
+}
