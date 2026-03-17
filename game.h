@@ -17,9 +17,17 @@
 #define TOGGLE_HARDCORE (1 << 2)
 #define FRESH (1 << 3)
 
-typedef struct GameState {
+
+typedef struct MovementContext{
     BoardState board;
     FellowshipToken fellowship[5];
+}MovementContext;
+
+typedef struct GameState {
+    MovementContext move_cntx;
+    uint8_t gandalf_cards[GANDALF_LEN];
+    uint8_t zone_cards[ZONE_CARD_SIZE];
+    EncounterCardState encounter_card_states[42];
 }GameState;
 
 extern const char* fellowship_names[];

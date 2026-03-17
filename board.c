@@ -26,9 +26,9 @@ int8_t update_nazgul(BoardState *board, int8_t variance) {
 }
 
 /*Standard rolls allow for rewards by landing on a destination space exactly, moving off of the special board locations does not*/
-void move_fellowship_roll(GameState *game, int8_t index, const char zone_arrays[6][9], int8_t variance, MoveType movetype) {
-    FellowshipToken *token = &game->fellowship[index];
-    FellowshipToken *frodo = &game->fellowship[FRODO_SAM];
+void move_fellowship(MovementContext *move_cntx, int8_t index, const char zone_arrays[6][9], int8_t variance, MoveType movetype) {
+    FellowshipToken *token = &move_cntx->fellowship[index];
+    FellowshipToken *frodo = &move_cntx->fellowship[FRODO_SAM];
     int8_t new_col = token->column + variance;
 
     /*
@@ -45,7 +45,7 @@ void move_fellowship_roll(GameState *game, int8_t index, const char zone_arrays[
             if (token->row == ZONE_GONDOR) {
                 if (movetype) { //board based movement is 0, therefore inherently falsey, so this requires roll based movement
                     printf("You have arrived at Minas Morgul via exact roll, your valor has allowed the ringbearer to advance further towards Mount Doom when he arrives!");
-                    game->board.frodo_advance++;
+                    move_cntx->board.frodo_advance++;
                 }
                 token->active = 0;
                 token->assisting = 0;
@@ -53,7 +53,7 @@ void move_fellowship_roll(GameState *game, int8_t index, const char zone_arrays[
                 return;
             } else {
             if (movetype) {
-                update_courage(&game->board, 1);
+                update_courage(&move_cntx->board, 1);
             }
             token->row++;
             token->column = 0;
@@ -78,20 +78,20 @@ void move_fellowship_roll(GameState *game, int8_t index, const char zone_arrays[
     int8_t occupied = 0;
     for (int8_t i = 0; i < 5; i++) {
         if (i == index) continue;
-        if (game->fellowship[i].row == token->row && game->fellowship[i].column == token->column) {
+        if (move_cntx->fellowship[i].row == token->row && move_cntx->fellowship[i].column == token->column) {
             occupied = 1;
             break;
         }
     }
 
-    if (!occupied || (game->board.flags & BF_HARDCORE)) {
-        if (board_space == 'N') update_nazgul(&game->board, 1);
-        if (board_space == 'C') update_courage(&game->board, -1);
+    if (!occupied || (move_cntx->board.flags & BF_HARDCORE)) {
+        if (board_space == 'N') update_nazgul(&move_cntx->board, 1);
+        if (board_space == 'C') update_courage(&move_cntx->board, -1);
     }
 }
 
-void move_frodo_roll(GameState *game, int8_t index, const char zone_arrays[6][9], int8_t variance, MoveType movetype) {
-    FellowshipToken *frodo = &game->fellowship[FRODO_SAM];
+void move_frodo(MovementContext *move_cntx, int8_t index, const char zone_arrays[6][9], int8_t variance, MoveType movetype) {
+    FellowshipToken *frodo = &move_cntx->fellowship[FRODO_SAM];
     int8_t new_col = frodo->column + variance;
 
     if (new_col >= ZONE_SIZE) {
@@ -100,12 +100,12 @@ void move_frodo_roll(GameState *game, int8_t index, const char zone_arrays[6][9]
         if (exact_roll) {
             if (frodo->row == ZONE_GONDOR) {
                 printf("The ringbearer has arrived at Minas Morgul, the fate of Middle Earth rests in their hands.");
-                if (game->board.frodo_advance) {
-                    printf("The gallantry of the Fellowship allows frodo to advance %d spaces.", game->board.frodo_advance);
+                if (move_cntx->board.frodo_advance) {
+                    printf("The gallantry of the Fellowship allows frodo to advance %d spaces.", move_cntx->board.frodo_advance);
                 }
                 frodo->row++;
-                game->board.current_zone++;
-                game->board.destination++;
+                move_cntx->board.current_zone++;
+                move_cntx->board.destination++;
                 frodo->column = 0;
                 return;
             } else {
@@ -115,15 +115,15 @@ void move_frodo_roll(GameState *game, int8_t index, const char zone_arrays[6][9]
                 }
                 frodo->row++;
                 frodo->column = 0;
-                game->board.destination++;
-                game->board.current_zone++;
+                move_cntx->board.destination++;
+                move_cntx->board.current_zone++;
             }
         } else {
             printf("The ringbearer has arrived at the destination, the next leg of the journey is upon you.");
             frodo->row++;
             frodo->column = 0;
-            game->board.destination++;
-            game->board.current_zone++;
+            move_cntx->board.destination++;
+            move_cntx->board.current_zone++;
         }
     } else {
         frodo->column = new_col;
@@ -133,15 +133,15 @@ void move_frodo_roll(GameState *game, int8_t index, const char zone_arrays[6][9]
     int8_t occupied = 0;
     for (int8_t i = 0; i < 5; i++) {
         if (i == index) continue;
-        if (game->fellowship[i].row == frodo->row && game->fellowship[i].column == frodo->column) {
+        if (move_cntx->fellowship[i].row == frodo->row && move_cntx->fellowship[i].column == frodo->column) {
             occupied = 1;
             break;
         }
     }
 
-    if (!occupied || (game->board.flags & BF_HARDCORE)) {
-        if (board_space == 'N') update_nazgul(&game->board, 1);
-        if (board_space == 'C') update_courage(&game->board, -1);
+    if (!occupied || (move_cntx->board.flags & BF_HARDCORE)) {
+        if (board_space == 'N') update_nazgul(&move_cntx->board, 1);
+        if (board_space == 'C') update_courage(&move_cntx->board, -1);
     }
 }
 

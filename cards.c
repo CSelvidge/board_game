@@ -57,7 +57,6 @@ const GandalfCardDef gandalf_card_defs[GANDALF_LEN] = { //.rodata
 };
 
 uint8_t zone_cards[7] = {0}; //7 indexes into the all_encounter_defs(cards.c) to define cards in the zone
-uint8_t gandalf_cards[5] = {0, 1, 2, 3, 4};
 GandalfCardState gandalf_card_states[GANDALF_LEN] = {0};
 
 /*Boromir specific card initialization*/

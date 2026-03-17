@@ -60,10 +60,11 @@ BoardState init_board();
 int8_t update_courage(BoardState *board, int8_t variance); 
 int8_t update_nazgul(BoardState *board, int8_t variance);
 
-typedef struct GameState GameState;
+typedef struct MovementContext MovementContext;
+typedef struct Gamestate Gamestate;
 
-void move_fellowship(GameState *game, int8_t index, const char zone_arrays[6][9], int8_t variance, MoveType movetype);
-void move_frodo(GameState *game, int8_t index, const char zone_arrays[6][9], int8_t variance, MoveType movetype);
+void move_fellowship(MovementContext *move_cntx, int8_t index, const char zone_arrays[6][9], int8_t variance, MoveType movetype);
+void move_frodo(MovementContext *move_cntx, int8_t index, const char zone_arrays[6][9], int8_t variance, MoveType movetype);
 
 void update_zone_cards(BoardState *board, int8_t zone_cards[]);
 
