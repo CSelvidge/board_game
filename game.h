@@ -31,18 +31,37 @@ typedef struct MovementContext{
     FellowshipToken fellowship[5];
 }MovementContext;
 
-typedef struct GameState {
-    MovementContext move_cntx;
+typedef struct CardContext {
+    /*
+      quick mafs gandalf = 5 bytes
+      zone = 7 bytes
+      enoucnter = 42 * 2 bytes
+      total = 96 bytes
+      cache = very no
+    */
     uint8_t gandalf_cards[GANDALF_LEN];
     uint8_t zone_cards[ZONE_CARD_SIZE];
     EncounterCardState encounter_card_states[42];
+}CardContext;
+
+typedef struct GameState {
+    MovementContext move_cntx;
+    CardContext card_cntx;
+    char player_names[MAX_PLAYERS][NAME_LEN];
+    uint8_t num_players;
 }GameState;
 
 extern const char* fellowship_names[];
 
+void get_player_names(int8_t num_players, char player_names[MAX_PLAYERS][NAME_LEN]);
+int8_t greeting();
+int8_t ask_hardcore();
+void start_game();
 void play_game(int8_t num_players, char player_names[MAX_PLAYERS][NAME_LEN]);
 void get_user_input(const char *message, char *buffer, size_t return_size);
 void init_game_state(GameState *game);
 int8_t play_again(int8_t hardcore);
-void draw_screen(GameState *game, char player_names[][NAME_LEN], int8_t num_players);
+void draw_screen(GameState *game);
+uint8_t calculate_rows(MovementContext *move_cntx);
+void draw_rows(uint8_t active_rows, MovementContext *move_cntx);
 #endif
