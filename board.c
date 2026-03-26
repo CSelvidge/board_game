@@ -148,7 +148,7 @@ void move_frodo(MovementContext *move_cntx, int8_t index, const char zone_arrays
 /*j is the incriment variable, i is the index into the larger encounter_card_defs[42] array.
   This allows the zone cards to be replaced by the next 7 cards from the larger array
   NOTE: this will be the same every time, shuffling is needed */
-void update_zone_cards(BoardState *board, int8_t zone_cards[]) {
+void update_zone_cards(BoardState *board, uint8_t zone_cards[]) {
     uint8_t start = ZONE_CARD_SIZE * board->current_zone;
     for (uint8_t j = 0; j < ZONE_CARD_SIZE; j++) {
         uint8_t i = start + j;

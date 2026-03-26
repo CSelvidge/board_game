@@ -66,6 +66,6 @@ typedef struct Gamestate Gamestate;
 void move_fellowship(MovementContext *move_cntx, int8_t index, const char zone_arrays[6][9], int8_t variance, MoveType movetype);
 void move_frodo(MovementContext *move_cntx, int8_t index, const char zone_arrays[6][9], int8_t variance, MoveType movetype);
 
-void update_zone_cards(BoardState *board, int8_t zone_cards[]);
+void update_zone_cards(BoardState *board, uint8_t zone_cards[]);
 
 #endif

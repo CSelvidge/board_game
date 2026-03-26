@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <GLFW/glfw3.h>
+#include <string.h>
 #include "board.h"
 #include "cards.h"
 #include "dice.h"
@@ -57,7 +58,7 @@ void get_player_names(int8_t num_players, char player_names[MAX_PLAYERS][NAME_LE
 int8_t greeting();
 int8_t ask_hardcore();
 void start_game();
-void play_game(int8_t num_players, char player_names[MAX_PLAYERS][NAME_LEN]);
+void play_game(GameState *game);
 void get_user_input(const char *message, char *buffer, size_t return_size);
 void init_game_state(GameState *game);
 int8_t play_again(int8_t hardcore);

@@ -13,9 +13,9 @@ void init_game_state(GameState *game) {
     game->move_cntx.board.uruk_hai_count = 1;
     game->move_cntx.board.nazghul_count = 1;
 
-    memset(&game->card_cntx.gandalf_cards, 0, sizeof(gandalf_cards));
+    memset(game->card_cntx.gandalf_cards, 0, sizeof(game->card_cntx.gandalf_cards));
     update_zone_cards(&game->move_cntx.board, game->card_cntx.zone_cards);
-    init_encounter_states(&game->card_cntx.encounter_card_states);
+    init_encounter_states(game->card_cntx.encounter_card_states);
 
     game->move_cntx.fellowship[ARAGORN] = (FellowshipToken){.initial = 'A', .row = 0, .column = 0, .active = 1, .assisting = 1};
     game->move_cntx.fellowship[GIMLI] = (FellowshipToken){.initial = 'G', .row = 0, .column = 0, .active = 1, .assisting = 1};
@@ -24,7 +24,7 @@ void init_game_state(GameState *game) {
     game->move_cntx.fellowship[FRODO_SAM] = (FellowshipToken){.initial = 'F', .row = 0, .column = 0, .active = 1, .assisting = 1};
 
     game->num_players = 0;
-    memset(&game->player_names, 0, sizeof(MAX_PLAYERS * NAME_LEN));
+    memset(game->player_names, 0, sizeof(game->player_names));
 }
 
 void start_game() {
@@ -36,24 +36,23 @@ void start_game() {
     
     const char* fellowship_names[] = {"Aragorn", "Gimli", "Legolas", "Marry and Pippen", "Frodo and Samwise"};
 
-    update_zone_cards(&game.move_cntx.board, game.card_cntx.zone_cards);
     shuffle_cards(game.card_cntx.zone_cards, ZONE_CARD_SIZE);
     shuffle_cards(game.card_cntx.gandalf_cards, GANDALF_LEN);
 
 
     /*This loop into switch dictates if the game should continue, be reset, or exit*/
     while (active) {
-    if (active & PLAY_AGAIN){
-        if ((active & FRESH) || !(active & SAME_PLAYERS)) {
-            game.num_players = greeting();
-            get_player_names(game.num_players, game.player_names);
+        if (active & PLAY_AGAIN){
+            if ((active & FRESH) || !(active & SAME_PLAYERS)) {
+                game.num_players = greeting();
+                get_player_names(game.num_players, game.player_names);
+            }
+            if (active & FRESH) {
+                hardcore = ask_hardcore();
+            }else if (active & TOGGLE_HARDCORE) {
+                hardcore = !hardcore;
+            }
         }
-        if (active & FRESH) {
-            hardcore = ask_hardcore();
-        }else if (active & TOGGLE_HARDCORE) {
-            hardcore = !hardcore;
-        }
-    }
         if (hardcore) game.move_cntx.board.flags |= BF_HARDCORE;
         play_game(&game);
         active = play_again(hardcore); //returns active as bitpacked
@@ -67,8 +66,7 @@ void start_game() {
 void play_game(GameState *game) {
     uint8_t playing = 1;
     while (playing) {
-
-    draw_screen(&game);
+    draw_screen(game);
     playing = 0;
     }
 }
@@ -135,9 +133,7 @@ int8_t greeting() {
             printf("Invalid number of players, the game only supports 1-4 players.\n");
             continue;
         }
-
         break;
-
     }
 
     const char *plural = confirmation[0] > 1 ? "s" : "";
