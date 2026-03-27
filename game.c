@@ -162,6 +162,7 @@ void draw_screen(GameState *game) {
       2)draw_rows is only responsible for drawing the rows themselves on the center of the screen, and as such takes active rows as an argument
 
     */
+   //Turn: # -- Destination: -- Gandalf & Treebeard?
     uint8_t active_rows = calculate_rows(&game->move_cntx);
     draw_rows(active_rows, &game->move_cntx);
 
