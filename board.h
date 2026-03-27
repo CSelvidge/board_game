@@ -12,6 +12,7 @@
 #define ZONE_SIZE 9
 
 extern const char zone_arrays[6][9];
+extern const char destinations[6][13];
 
 typedef enum {
     ZONE_RIVENDELL,

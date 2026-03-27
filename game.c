@@ -25,6 +25,8 @@ void init_game_state(GameState *game) {
 
     game->num_players = 0;
     memset(game->player_names, 0, sizeof(game->player_names));
+
+    game->turn_count = 0;
 }
 
 void start_game() {
@@ -67,6 +69,7 @@ void play_game(GameState *game) {
     uint8_t playing = 1;
     while (playing) {
     draw_screen(game);
+    game->turn_count++;
     playing = 0;
     }
 }
@@ -163,9 +166,29 @@ void draw_screen(GameState *game) {
 
     */
    //Turn: # -- Destination: -- Gandalf & Treebeard?
+    draw_top(game);
     uint8_t active_rows = calculate_rows(&game->move_cntx);
     draw_rows(active_rows, &game->move_cntx);
 
+}
+
+void draw_top(GameState *game) {
+    //Yay boilerplate
+    uint8_t buff_count = 0;
+
+    char line_buff[SCREEN_WIDTH + 1];
+    memset(line_buff, ' ', SCREEN_WIDTH);
+    line_buff[SCREEN_WIDTH] = '\0';
+    /*
+      Turn count -> Destination -> something else
+    */
+    uint8_t len = snprintf(line_buff, 12, "Turn: %d ", game->turn_count);
+    line_buff[len] = ' ';
+
+    len = snprintf(line_buff + (SCREEN_WIDTH / 2), 28, "Destination: %s", destinations[game->move_cntx.board.destination]); //28 is from "Destination: " + destinations column length
+    line_buff[(SCREEN_WIDTH / 2) + len] = ' ';
+
+    printf("%s\n", line_buff);
 }
 
 uint8_t calculate_rows(MovementContext *move_cntx) {

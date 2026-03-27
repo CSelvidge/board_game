@@ -171,3 +171,13 @@ const char zone_arrays[6][9] =
     {'M', 'O', 'O', 'O', 'O', 'O', 'O', 'O', 'D'} //Zone 5 from Minas Morgul to Mount Doom
 
 };
+
+const char destinations[6][13] = 
+{
+    {"Lothlorien"},
+    {"Rohan"},
+    {"Helm's Deep"},
+    {"Gondor"},
+    {"Minas Morgul"},
+    {"Mount Doom"}
+};

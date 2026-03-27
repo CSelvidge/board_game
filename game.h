@@ -50,6 +50,7 @@ typedef struct GameState {
     CardContext card_cntx;
     char player_names[MAX_PLAYERS][NAME_LEN];
     uint8_t num_players;
+    uint8_t turn_count;
 }GameState;
 
 extern const char* fellowship_names[];
