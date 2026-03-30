@@ -180,7 +180,7 @@ void draw_top(GameState *game) {
     memset(line_buff, ' ', SCREEN_WIDTH);
     line_buff[SCREEN_WIDTH] = '\0';
     /*
-      Turn count -> Destination -> something else
+      Turn count -> Destination -> something else, but what else? Maybe Gandalf / Treebeard flags??
     */
     uint8_t len = snprintf(line_buff, 12, "Turn: %d ", game->turn_count);
     line_buff[len] = ' ';
